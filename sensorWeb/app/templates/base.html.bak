@@ -1,0 +1,38 @@
+<html>
+    <head>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<!--        <link rel="stylesheet" href="static/pure/pure.css">-->
+        <link rel="stylesheet" href="http://yui.yahooapis.com/pure/0.6.0/pure-min.css">
+<!--        <link rel="stylesheet" href="static/pure/grids.css"> -->
+        <link rel="stylesheet" href="static/side-menu.css">
+
+
+            <title>Penguin's home</title>
+    </head>
+    <body>
+    <div id="layout">
+        <a href="#menu" id="menuLink" class="menu-link">
+            <span></span>
+        </a>
+        <div id="menu">
+            <div class="pure-menu">
+                <a class="pure-menu-heading" href="#">Обзор</a>
+                <ul class="pure-menu-list">
+                    <li class="pure-menu-item"><a href="#" class="pure-menu-link">Датчики</a></li>
+                </ul>
+            </div>
+        </div>
+        <div id="main">
+            {%if g.user.is_authenticated () %}
+                <div class="pure-g">
+                    <div class="pure-u-1-1">
+                        <a href="{{ url_for('logout') }}">Выйти</a>
+                    </div>
+                </div>
+            {% endif %}
+            {% block content %}{% endblock %}
+        </div>
+    </div>
+    <script src="static/ui.js"></script>
+    </body>
+</html>

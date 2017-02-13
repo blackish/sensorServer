@@ -1,0 +1,25 @@
+{% extends "base.html" %}
+{% block content %}
+<h1>Привет, {{user.user_id}}!</h1>
+<div class="pure-g">
+    <div class="pure-u-1-1">
+        <table class="pure-table pure-table-horizontal">
+            <thead>
+                <tr>
+                    <th>Адрес</th>
+                    <th>Описание</th>
+                    <th>Последняя регистрация</th>
+                    <th>#</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for s in devs %}
+                <tr>
+                    <td>{{s.address}}</td><td>{{s.descr}}</td><td>{{s.last_seen}}</td><td>#</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    </div>
+</div>
+{% endblock %}

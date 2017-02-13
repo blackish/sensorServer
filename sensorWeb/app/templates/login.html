@@ -1,0 +1,12 @@
+<!-- extend from base layout -->
+{% extends "base.html" %}
+
+{% block content %}
+<h1>Sign In</h1>
+<form class="pure-form" action="" method="post" name="login">
+    {{form.hidden_tag()}}
+        {{form.userid( placeholder="Login")}}
+        {{form.passwd ( placeholder="Password" )}}
+    <button type="submit" class="pure-button pure-button-primary">Sign in</button>
+</form>
+{% endblock %}

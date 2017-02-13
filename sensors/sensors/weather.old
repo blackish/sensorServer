@@ -1,0 +1,57 @@
+#coding=UTF8
+import urllib
+from xml.dom import minidom
+from datetime import datetime,timedelta
+
+class Weather:
+    def __init__ ( self ):
+        self.currentWeather = u' ';
+        self.currentDatetime = datetime.strptime ( 'Jun 1 1971 1:00PM', '%b %d %Y %I:%M%p' )
+    def getWeather ( self ):
+        cWeather = u' '
+        currentDatetime = datetime.today ()
+        if abs ( ( currentDatetime - self.currentDatetime ).seconds ) > 1440:
+
+            try:
+                f = urllib.urlopen ( "http://export.yandex.ru/weather-ng/forecasts/27612.xml" )
+                xmldoc = minidom.parse ( f )
+                f.close ()
+                if len ( xmldoc.childNodes ) <= 0:
+                    currentWeather = u' '
+                    return currentWeather
+                self.currentDatetime = datetime.today ()
+                cWeather = u'Сегодня '
+                day = xmldoc.firstChild.childNodes [ 7 ]
+                for node in day.getElementsByTagName('day_part'):
+                    if node.attributes [ 'type' ].value == 'day_short':
+                        cWeather += u'днём '
+                        cWeather += node.childNodes [ 13 ].firstChild.data
+                        cWeather += u', '
+                        cWeather += node.childNodes [ 1 ].firstChild.data
+                    if node.attributes [ 'type' ].value == 'night_short':
+                        cWeather += u'\xb0C, ночью '
+                        cWeather += node.childNodes [ 13 ].firstChild.data
+                        cWeather += u', '
+                        cWeather += node.childNodes [ 1 ].firstChild.data
+                cWeather += u'\xb0C. Завтра '
+                day = xmldoc.firstChild.childNodes [ 9 ]
+                for node in day.getElementsByTagName('day_part'):
+                    if node.attributes [ 'type' ].value == 'day_short':
+                        cWeather += u'днём '
+                        cWeather += node.childNodes [ 13 ].firstChild.data
+                        cWeather += u', '
+                        cWeather += node.childNodes [ 1 ].firstChild.data
+                    if node.attributes [ 'type' ].value == 'night_short':
+                        cWeather += u'\xb0C, ночью '
+                        cWeather += node.childNodes [ 13 ].firstChild.data
+                        cWeather += u', '
+                        cWeather += node.childNodes [ 1 ].firstChild.data
+                cWeather += u'\xb0C'
+                self.currentWeather = cWeather
+            except Exception:
+                cWeather = u'Погода недоступна'
+        	self.currentDatetime = datetime.strptime ( 'Jun 1 1971 1:00PM', '%b %d %Y %I:%M%p' )
+                self.currentWeather = cWeather
+        else:
+            cWeather = self.currentWeather;
+        return cWeather
